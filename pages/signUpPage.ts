@@ -75,40 +75,6 @@ export class SignUpPage {
         if (testLocale !== process.env.DEFAULT_APP_LOCALE) {
             await this.header.setLocale(testLocale);
         } 
-
-        // const testLocale = (process.env.LOCALE)? process.env.LOCALE : 'en';
-        // await this.page.goto(`${process.env.BASE_URL}/${testLocale}/signup`, { waitUntil: 'networkidle' });
-        
-    }
-    
-    async fillFirstName(name: string = '') {
-        await this.firstNameInput.clear();
-        await this.firstNameInput.fill(name);
-    }
-
-    async fillLastName(name: string = '') {
-        await this.lastNameInput.clear();
-        await this.lastNameInput.fill(name);
-    }
-
-    async fillEmail(email: string = '') {
-        await this.emailInput.clear();
-        await this.emailInput.fill(email);
-    }
-
-    async fillPhoneNumber(phone: string = '') {
-        await this.phoneInput.clear();
-        await this.phoneInput.fill(phone);
-    }
-
-    async fillPassword(password: string = '') {
-        await this.passwordInput.clear();
-        await this.passwordInput.fill(password);
-    }
-
-    async fillConfirmPassword(password: string = '') {
-        await this.passwordConfirmationInput.clear();
-        await this.passwordConfirmationInput.fill(password);
     }
 
     async checkAgreementCheckbox() {
@@ -133,24 +99,29 @@ export class SignUpPage {
         return response;
     }
 
+    async fillFormField(locator: Locator, value: string = '') {
+        await locator.clear();
+        await locator.fill(value);
+    }
+
     async fillForm(data: SignUpFormData) {
         if (data.firstName) {
-            await this.fillFirstName(data.firstName);
+            await this.fillFormField(this.firstNameInput, data.firstName);
         }
         if (data.lastName) {
-            await this.fillLastName(data.lastName);
+            await this.fillFormField(this.lastNameInput, data.lastName);
         }
         if (data.phoneNumber) {
-            await this.fillPhoneNumber(data.phoneNumber);
+            await this.fillFormField(this.phoneInput, data.phoneNumber);
         }
         if (data.password) {
-            await this.fillPassword(data.password);
+            await this.fillFormField(this.passwordInput, data.password);
         }
         if (data.confirmPassword) {
-            await this.fillConfirmPassword(data.confirmPassword);
+            await this.fillFormField(this.passwordConfirmationInput, data.confirmPassword);
         }
         if (data.email) {
-            await this.emailInput.fill(data.email);
+            await this.fillFormField(this.emailInput, data.email);
         }
         if (data.region) {
             await this.provinceDropdown.selectOption(data.region);
