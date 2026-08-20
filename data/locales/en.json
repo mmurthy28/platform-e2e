@@ -1,0 +1,44 @@
+{
+    "common": {
+        "errorMessages": {
+            "passwordMinimumLength": "Minimum of 12 letters required",
+            "requiredField": "The field is required",
+            "invalidValue": "Invalid value",
+            "invalidEmail": "Invalid email",
+            "invalidName": "Invalid name",
+            "passwordMismatch": "Passwords do not match",
+            "passwordMaximumLength": "Maximum of 32 letters required",
+            "passwordCriteria": "Password must contain at least one uppercase letter, one lowercase letter and one number",
+            "longName": "Too many characters"
+        },
+        "provinces": {
+            "ON": "Ontario",
+            "QC": "Quebec",
+            "AB": "Alberta",
+            "BC": "British-Columbia",
+            "MB": "Manitoba",
+            "NB": "New Brunswick",
+            "NF": "Newfoundland and Labrador",
+            "NS": "Nova Scotia",
+            "PE": "Prince Edward Island",
+            "SK": "Saskatchewan",
+            "NW": "Northwest Territories",
+            "YT": "Yukon",
+            "NU": "Nunavut"
+        }
+    },
+    "signup": {
+        "placeholders": {
+            "firstName": "First name",
+            "lastName": "Last name",
+            "phoneNumber": "Phone number",
+            "email": "Email",
+            "password": "Password",
+            "confirmPassword": "Confirm password",
+            "province": "Province of purchase"
+        },
+        "passwordCriteria": "Password must be between 12 and 32 characters and contain one uppercase letter, one lowercase letter and one number.",
+        "pageTitle": "Create a nesto account",
+        "agreementText": "By checking this box, you agree to be contacted by nesto’s partners for the purposes of offering you financial products. You agree to nesto sharing your mortgage information with its partners. You can opt-out at any time."
+    }
+}

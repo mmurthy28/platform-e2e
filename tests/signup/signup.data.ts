@@ -1,0 +1,138 @@
+import { locale } from '../../fixtures/baseTest';
+const localeData = require(`../../data/locales/${locale}.json`);
+
+export const positiveTests = [
+  {
+    title: 'User can signup successfully with agreement opt in',
+    values: {
+      "firstName": "Test", 
+      "lastName": "User",
+      "phoneNumber": "+12345678910",
+      "province": localeData.common.provinces.ON,
+      "region": "ON",
+      "password": "Password!456",
+      "confirmPassword": "Password!456",
+      "agreement": false
+    },
+  },
+  {
+    title: 'User can signup successfully with agreement opt out',
+    values: {
+      "firstName": "Lory ", 
+      "lastName": "O'Brian",
+      "phoneNumber": "+12312434342",
+      "province": localeData.common.provinces.QC,
+      "region": "QC",
+      "password": "Password!456",
+      "confirmPassword": "Password!456",
+      "agreement": true
+    },
+  }
+]
+
+export const negativeTests = [
+    {
+      title: 'validation errors are displayed when form submitted is empty',
+      values: {},
+      expectedErrors: {
+        'password': localeData.common.errorMessages.passwordMinimumLength,
+        'firstName': localeData.common.errorMessages.requiredField,
+        'lastName': localeData.common.errorMessages.requiredField,
+        'phoneNumber': localeData.common.errorMessages.invalidValue,
+        'email': localeData.common.errorMessages.invalidEmail
+      },
+    },
+    {
+      title: 'validation errors are displayed when name is invalid',
+      values: {
+        firstName: "123",
+        lastName: "123"
+      },
+      expectedErrors: {
+        'firstName': localeData.common.errorMessages.invalidName,
+        'lastName': localeData.common.errorMessages.invalidName,
+      },
+    },
+    {
+      title: 'validation errors are displayed when first name is too long',
+      values: {
+        firstName: "adsfsdvfsbfdbfgsnhmjhgfdwsdfghjhgfdsadfghjgfdvcsadsfsdffffggghij",
+        lastName: " "
+      },
+      expectedErrors: {
+        'firstName': localeData.common.errorMessages.longName,
+        'lastName': localeData.common.errorMessages.requiredField,
+      },
+    },
+    {
+      title: 'validation errors are displayed when last name is too long',
+      values: {
+        lastName: "adsfsdvfsbfdbfgsnhmjhgfdwsdfghjhgfdsadfghjgfdvcsadsfsdffffggghij",
+        firstName: " "
+      },
+      expectedErrors: {
+        'firstName': localeData.common.errorMessages.requiredField,
+        'lastName': localeData.common.errorMessages.longName,
+      },
+    },
+    {
+      title: 'validation errors are displayed when email is invalid',
+      values: {
+        firstName: "John",
+        lastName: "McGuire",
+        email: "john @xyz.in",
+      },
+      expectedErrors: {
+        'email': localeData.common.errorMessages.invalidEmail,
+      },
+    },
+    {
+      title: 'validation errors are displayed when password field contains less than 12 characters',
+      values: {
+        "password": "Password!24",
+        "confirmPassword": "Password!24"
+      },
+      expectedErrors: {
+        'password': localeData.common.errorMessages.passwordMinimumLength,
+      }
+    },
+    {
+        title: 'validation errors are displayed when password field contains more than 32 characters',
+        values: {
+          "password": "Password!123456789101234567891012"
+        },
+        expectedErrors: {
+          'password': localeData.common.errorMessages.passwordMaximumLength,
+        }
+    },
+    {
+        title: 'validation error is displayed when password field does not contain uppercase letter',
+        values: {
+          "password": "abcdefghijk1",
+          "confirmPassword": "abcdefghijk1",
+        },
+        expectedErrors: {
+          'password': localeData.common.errorMessages.passwordCriteria,
+        }
+    },
+    {
+        title: 'validation errors is displayed when password field does not contain lowercase letter',
+        values: {
+          "password": "123456789ABC",
+          "confirmPassword": "123456789ABC",
+        },
+        expectedErrors: {
+          'password': localeData.common.errorMessages.passwordCriteria,
+        }
+    },
+    {
+        title: 'validation errors is displayed when password field does not contain a number',
+        values: {
+          "password": "Abcdefghijkl",
+        },
+        expectedErrors: {
+          'password': localeData.common.errorMessages.passwordCriteria,
+        }
+    },
+]
+

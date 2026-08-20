@@ -1,0 +1,44 @@
+{
+    "common": {
+        "errorMessages": {
+            "passwordMinimumLength": "Minimum de 12 lettres requises",
+            "requiredField": "Ce champ est obligatoire.",
+            "invalidValue": "Valeur invalide.",
+            "invalidEmail": "Courriel invalide",
+            "invalidName": "Nom invalide",
+            "passwordMismatch": "Les mots de passe ne correspondent pas",
+            "passwordMaximumLength": "Maximum de 32 lettres requises",
+            "passwordCriteria": "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre",
+            "longName": "Trop de caractères"
+        },
+        "provinces": {
+            "ON": "Ontario",
+            "QC": "Québec",
+            "AB": "Alberta",
+            "BC": "Colombie-Britannique",
+            "MB": "Manitoba",
+            "NB": "Nouveau-Brunswick",
+            "NS": "Nouvelle-Écosse",
+            "NF": "Terre-Neuve-et-Labrador",
+            "PE": "Île-du-Prince-Édouard",
+            "SK": "Saskatchewan",
+            "NW": "Territoires du Nord-Ouest",
+            "YT": "Yukon",
+            "NU": "Nunavut"
+        }
+    },
+    "signup": {
+        "placeholders": {
+            "firstName": "Prénom",
+            "lastName": "Nom",
+            "phoneNumber": "Téléphone",
+            "email": "Courriel",
+            "password": "Mot de passe",
+            "confirmPassword": "Confirmation du mot de passe",
+            "province": "Province de l'achat"
+        },
+        "passwordCriteria": "Le mot de passe doit contenir au entre 12 et 32 caractères et contenir au moins une lettre majuscule, une lettre minuscule et un chiffre.",
+        "pageTitle": "Créez un compte nesto",
+        "agreementText": "En cochant cette case, vous acceptez d’être contacté par les partenaires de nesto dans le but de vous proposer des produits financiers. Vous acceptez que nesto partage vos informations de demande hypothécaire avec ses partenaires, si nous ne sommes pas en mesure de vous fournir nos services. Vous pouvez vous désinscrire à tout moment."
+    }
+}
