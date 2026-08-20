@@ -4,51 +4,35 @@ import { generateUniqueEmail } from '../../utils/test-data.utils';
 const localeData = require(`../../data/locales/${locale}.json`);
 const placeholders = localeData.signup.placeholders;
 
-test.describe('Sign up page tests', async() => {
-  test('User can sign up successfully with agreement opted out', {tag: ['@test1'] }, async ({ page, signupPage }) => {
-    const validUser = testcases[0].values;
-    validUser['email'] = generateUniqueEmail();
+test.describe('Sign up page tests', () => {
+  const successCases = [
+    { name: 'with agreement opted out', data: testcases[0], tag: '@test1' },
+    { name: 'with agreement opted in', data: testcases[1], tag: '@test5' },
+  ];
 
-    await signupPage.goto();
-    await signupPage.fillForm(validUser);
-    const response = await signupPage.submitAccountForm();
+  for (const { name, data, tag } of successCases) {
+    test(`User can sign up successfully ${name}`, {tag: [tag] }, async ({ page, signupPage }) => {
+      const validUser = { ...data.values, email: generateUniqueEmail() };
 
-    // Validate API response
-    expect(response.status()).toEqual(201);
-    const responseBody = await response.json();
-    const account = responseBody.account;
-    expect.soft(account.email).toEqual(validUser['email']);
-    expect.soft(account.firstName).toEqual(validUser['firstName']);
-    expect.soft(account.lastName).toEqual(validUser['lastName']);
-    expect.soft(account.phone).toEqual(validUser['phoneNumber']);
-    expect.soft(account.region).toEqual(validUser['region']);
-    expect.soft(account.leadDistributeConsentAgreement).toBeFalsy();
+      await signupPage.goto();
+      await signupPage.fillForm(validUser);
+      const response = await signupPage.submitAccountForm();
 
-    // Check navigation on success
-    await page.waitForURL('**/getaquote**');
-  });
+      // Validate API response
+      expect(response.status()).toEqual(201);
+      const responseBody = await response.json();
+      const account = responseBody.account;
+      expect.soft(account.email).toEqual(validUser['email']);
+      expect.soft(account.firstName).toEqual(validUser['firstName'].trim());
+      expect.soft(account.lastName).toEqual(validUser['lastName'].trim());
+      expect.soft(account.phone).toEqual(validUser['phoneNumber']);
+      expect.soft(account.region).toEqual(validUser['region']);
+      expect.soft(account.leadDistributeConsentAgreement).toEqual(!!validUser['agreement']);
 
-  test('User can sign up successfully with agreement opted in', {tag: ['@test5'] }, async ({ page, signupPage }) => {
-    const validUser = testcases[1].values;
-    validUser['email'] = generateUniqueEmail();
-    await signupPage.goto();
-    await signupPage.fillForm(validUser);
-    const response = await signupPage.submitAccountForm();
-
-    // Validate API response
-    expect(response.status()).toEqual(201);
-    const responseBody = await response.json();
-    const account = responseBody.account;
-    expect.soft(account.email).toEqual(validUser['email']);
-    expect.soft(account.firstName).toEqual(validUser['firstName'].trim());
-    expect.soft(account.lastName).toEqual(validUser['lastName']);
-    expect.soft(account.phone).toEqual(validUser['phoneNumber']);
-    expect.soft(account.region).toEqual(validUser['region']);
-    expect.soft(account.leadDistributeConsentAgreement).toBeTruthy();
-
-    // Check navigation on success
-    await page.waitForURL('**/getaquote**');
-  });
+      // Check navigation on success
+      await page.waitForURL('**/getaquote**');
+    });
+  }
 
   test('Sign up page default values', {tag: ['@test3'] },async ({ page, signupPage }) => {
     await signupPage.goto();
@@ -80,9 +64,8 @@ test.describe('Sign up page tests', async() => {
     expect.soft(agreementText).toEqual(localeData.signup.agreementText);
 
     const allProvinces = await signupPage.getAllProvinces();
-    for(const [entry] of Object.entries(localeData.common.provinces)) {
-      expect.soft(allProvinces).toContain(localeData.common.provinces[entry]);
-    }
+    const actualProvinces = allProvinces.filter(p => p !== localeData.signup.placeholders.province);
+    const expectedProvinces = Object.values(localeData.common.provinces);
+    expect.soft(actualProvinces.sort()).toEqual(expectedProvinces.sort());
   });
 });
-
