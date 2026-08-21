@@ -1,37 +1,53 @@
-Platform E2E
-End-to-end test automation framework built using [Playwright](https://playwright.dev/) and TypeScript.
+# Platform E2E
+## End-to-end test automation framework built using [Playwright](https://playwright.dev/) and TypeScript.
 
-Installation
+## Installation
 
-Clone the repository:
+### Clone the repository:
+```
 git clone https://github.com/mmurthy28/platform-e2e.git
 cd platform-e2e
+```
 
-Install dependencies:
+### Install dependencies:
+```
 npm install
+```
 
-Install Playwright browsers:
+### Install Playwright browsers:
+```
 npx playwright install
+```
 
-Running tests:
+### Running tests:
 
-To run all tests, execute the following command in the terminal:
+### To run all tests, execute the following command in the terminal:
+```
 npx playwright test
+```
 
-To run all tests for a supported locale (en/fr), default is en:
+### To run all tests for a supported locale (en/fr), default is en:
+```
 LOCALE=fr npx playwright test 
+```
 
-To run a specific test:
+### To run a specific test:
+```
 npx playwright test tests/signup/signup.spec.ts
+```
 
-To run all tests in a specific environment (development/staging), default is development:
+### To run all tests in a specific environment (development/staging), default is development:
+```
 NODE_ENV=development LOCALE=fr npx playwright test 
+```
 
-Github actions
+### Github actions
 
 Run the following workflow after selecting locale (en/fr) in the dropdown
 
-Test Reports
+### Test Reports
 
 After local test execution, generate/open the Playwright HTML report:
+```
 npx playwright show-report
+```
