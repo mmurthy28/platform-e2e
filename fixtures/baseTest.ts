@@ -12,4 +12,3 @@ export const test = base.extend<Fixtures>({
     }
 });
 export { expect } from '@playwright/test';
-export const locale = process.env.LOCALE || 'en';

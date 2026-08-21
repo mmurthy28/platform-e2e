@@ -1,5 +1,4 @@
-import { locale } from '../../fixtures/baseTest';
-const localeData = require(`../../data/locales/${locale}.json`);
+import { localeData } from '../../utils/locale.utils';
 
 export const positiveTests = [
   {
@@ -19,7 +18,7 @@ export const positiveTests = [
     title: 'User can signup successfully with agreement opt out',
     values: {
       "firstName": "Lory ", 
-      "lastName": "O'Brian",
+      "lastName": "O'Brian ",
       "phoneNumber": "+12312434342",
       "province": localeData.common.provinces.QC,
       "region": "QC",
@@ -32,7 +31,7 @@ export const positiveTests = [
 
 export const negativeTests = [
     {
-      title: 'validation errors are displayed when form submitted is empty',
+      title: 'form submitted is empty',
       values: {},
       expectedErrors: {
         'password': localeData.common.errorMessages.passwordMinimumLength,
@@ -43,7 +42,7 @@ export const negativeTests = [
       },
     },
     {
-      title: 'validation errors are displayed when name is invalid',
+      title: 'name is invalid',
       values: {
         firstName: "123",
         lastName: "123"
@@ -54,7 +53,7 @@ export const negativeTests = [
       },
     },
     {
-      title: 'validation errors are displayed when first name is too long',
+      title: 'first name is too long',
       values: {
         firstName: "adsfsdvfsbfdbfgsnhmjhgfdwsdfghjhgfdsadfghjgfdvcsadsfsdffffggghij",
         lastName: " "
@@ -65,7 +64,7 @@ export const negativeTests = [
       },
     },
     {
-      title: 'validation errors are displayed when last name is too long',
+      title: 'last name is too long',
       values: {
         lastName: "adsfsdvfsbfdbfgsnhmjhgfdwsdfghjhgfdsadfghjgfdvcsadsfsdffffggghij",
         firstName: " "
@@ -76,7 +75,7 @@ export const negativeTests = [
       },
     },
     {
-      title: 'validation errors are displayed when email is invalid',
+      title: 'email is invalid',
       values: {
         firstName: "John",
         lastName: "McGuire",
@@ -87,7 +86,7 @@ export const negativeTests = [
       },
     },
     {
-      title: 'validation errors are displayed when password field contains less than 12 characters',
+      title: 'password contains less than 12 characters',
       values: {
         "password": "Password!24",
         "confirmPassword": "Password!24"
@@ -97,7 +96,7 @@ export const negativeTests = [
       }
     },
     {
-        title: 'validation errors are displayed when password field contains more than 32 characters',
+        title: 'password contains more than 32 characters',
         values: {
           "password": "Password!123456789101234567891012"
         },
@@ -106,7 +105,7 @@ export const negativeTests = [
         }
     },
     {
-        title: 'validation error is displayed when password field does not contain uppercase letter',
+        title: 'password does not contain uppercase letter',
         values: {
           "password": "abcdefghijk1",
           "confirmPassword": "abcdefghijk1",
@@ -116,7 +115,7 @@ export const negativeTests = [
         }
     },
     {
-        title: 'validation errors is displayed when password field does not contain lowercase letter',
+        title: 'password field does not contain lowercase letter',
         values: {
           "password": "123456789ABC",
           "confirmPassword": "123456789ABC",
@@ -126,7 +125,7 @@ export const negativeTests = [
         }
     },
     {
-        title: 'validation errors is displayed when password field does not contain a number',
+        title: 'password does not contain a number',
         values: {
           "password": "Abcdefghijkl",
         },
@@ -135,4 +134,3 @@ export const negativeTests = [
         }
     },
 ]
-

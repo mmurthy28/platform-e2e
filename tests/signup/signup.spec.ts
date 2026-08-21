@@ -1,17 +1,17 @@
-import { test, expect, locale } from '../../fixtures/baseTest';
+import { test, expect } from '../../fixtures/baseTest';
 import { positiveTests as testcases } from './signup.data';
 import { generateUniqueEmail } from '../../utils/test-data.utils';
-const localeData = require(`../../data/locales/${locale}.json`);
+import { localeData } from '../../utils/locale.utils';
 const placeholders = localeData.signup.placeholders;
 
-test.describe('Sign up page tests', () => {
+test.describe('Signup page tests', () => {
   const successCases = [
-    { name: 'with agreement opted out', data: testcases[0], tag: '@test1' },
-    { name: 'with agreement opted in', data: testcases[1], tag: '@test5' },
+    { name: 'with agreement opted out', data: testcases[0] },
+    { name: 'with agreement opted in', data: testcases[1] }
   ];
 
-  for (const { name, data, tag } of successCases) {
-    test(`User can sign up successfully ${name}`, {tag: [tag] }, async ({ page, signupPage }) => {
+  for (const { name, data } of successCases) {
+    test(`User can sign up successfully ${name}`, { tag: ['@signup-success'] }, async ({ page, signupPage }) => {
       const validUser = { ...data.values, email: generateUniqueEmail() };
 
       await signupPage.goto();
@@ -34,19 +34,22 @@ test.describe('Sign up page tests', () => {
     });
   }
 
-  test('Sign up page default values', {tag: ['@test3'] },async ({ page, signupPage }) => {
+  test('Sign up page default values', { tag: ['@signup-default'] },async ({ page, signupPage }) => {
     await signupPage.goto();
-    await expect(signupPage.firstNameInput).toBeVisible();
-    await expect(signupPage.lastNameInput).toBeVisible();
-    await expect(signupPage.phoneInput).toBeVisible();
-    await expect(signupPage.emailInput).toBeVisible();
-    await expect(signupPage.passwordInput).toBeVisible();
-    await expect(signupPage.passwordConfirmationInput).toBeVisible();
-    await expect(signupPage.provinceDropdown).toBeVisible();
-    await expect(signupPage.image).toBeVisible();
-    await expect(signupPage.loginLink).toBeVisible();
-    await expect(signupPage.termsLink).toBeVisible();
 
+    // Check form elements are visible
+    await expect.soft(signupPage.firstNameInput).toBeVisible();
+    await expect.soft(signupPage.lastNameInput).toBeVisible();
+    await expect.soft(signupPage.phoneInput).toBeVisible();
+    await expect.soft(signupPage.emailInput).toBeVisible();
+    await expect.soft(signupPage.passwordInput).toBeVisible();
+    await expect.soft(signupPage.passwordConfirmationInput).toBeVisible();
+    await expect.soft(signupPage.provinceDropdown).toBeVisible();
+    await expect.soft(signupPage.image).toBeVisible();
+    await expect.soft(signupPage.loginLink).toBeVisible();
+    await expect.soft(signupPage.termsLink).toBeVisible();
+
+    // Check labels/placeholder in form inputs
     const displayedPlaceholders = await signupPage.getFieldPlaceholders();
     expect.soft(displayedPlaceholders['firstName']).toEqual(placeholders['firstName']);
     expect.soft(displayedPlaceholders['lastName']).toEqual(placeholders['lastName']);
@@ -56,6 +59,7 @@ test.describe('Sign up page tests', () => {
     expect.soft(displayedPlaceholders['confirmPassword']).toEqual(placeholders['confirmPassword']);
     expect.soft(displayedPlaceholders['province']).toEqual(placeholders['province']);
 
+    // Check header, password field and agreement checkbox labels
     const passwordText = await signupPage.getPasswordCondition();
     const title = await signupPage.getPageTitle();
     const agreementText = await signupPage.getAgreementLabel();
@@ -63,6 +67,7 @@ test.describe('Sign up page tests', () => {
     expect.soft(title).toEqual(localeData.signup.pageTitle);
     expect.soft(agreementText).toEqual(localeData.signup.agreementText);
 
+    // Check provinces dropdown lists all Canadian provinces
     const allProvinces = await signupPage.getAllProvinces();
     const actualProvinces = allProvinces.filter(p => p !== localeData.signup.placeholders.province);
     const expectedProvinces = Object.values(localeData.common.provinces);

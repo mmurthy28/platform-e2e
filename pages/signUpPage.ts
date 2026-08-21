@@ -1,5 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 import { Header } from '../components/header';
+import { DEFAULT_APP_LOCALE } from '../utils/locale.utils';
 
 export type SignUpFormData = {
     firstName?: string,
@@ -56,7 +57,6 @@ export class SignUpPage {
         this.image = page.getByAltText('nesto secure');
         this.loginLink = page.getByTestId('login-link');
         this.termsLink = page.getByTestId('terms-link');
-
         this.firstNameError = page.getByTestId('first-name-error-message-typography');
         this.lastNameError = page.getByTestId('last-name-error-message-typography');
         this.phoneError = page.getByTestId('phone-error-message-typography');
@@ -71,8 +71,8 @@ export class SignUpPage {
     async goto() {
         await this.page.goto(`${process.env.BASE_URL}/signup`, { waitUntil: 'networkidle' });
         const testLocale = (process.env.LOCALE)? process.env.LOCALE : 'en';
-        // Switch locale if required
-        if (testLocale !== process.env.DEFAULT_APP_LOCALE) {
+        // Switch locale if required via UI 
+        if (testLocale !== DEFAULT_APP_LOCALE) {
             await this.header.setLocale(testLocale);
         } 
     }
