@@ -43,8 +43,8 @@ NODE_ENV=development LOCALE=fr npx playwright test
 
 ### Github actions
 
-Run the following [workflow] https://github.com/mmurthy28/platform-e2e/actions/workflows/playwright.yml after selecting locale (en/fr) in the dropdown
-
+Run the following workflow after selecting locale (en/fr) in the dropdown
+https://github.com/mmurthy28/platform-e2e/actions/workflows/playwright.yml 
 
 ### Test Reports
 
