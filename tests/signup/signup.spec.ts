@@ -13,7 +13,6 @@ test.describe('Signup page tests', () => {
   for (const { name, data } of successCases) {
     test(`User can sign up successfully ${name}`, { tag: ['@signup-success'] }, async ({ page, signupPage }) => {
       const validUser = { ...data.values, email: generateUniqueEmail() };
-
       await signupPage.goto();
       await signupPage.fillForm(validUser);
       const response = await signupPage.submitAccountForm();

@@ -2,7 +2,6 @@ import { localeData } from '../../utils/locale.utils';
 
 export const positiveTests = [
   {
-    title: 'User can signup successfully with agreement opt in',
     values: {
       "firstName": "Test", 
       "lastName": "User",
@@ -15,15 +14,14 @@ export const positiveTests = [
     },
   },
   {
-    title: 'User can signup successfully with agreement opt out',
     values: {
-      "firstName": "Lory ", 
-      "lastName": "O'Brian ",
+      "firstName": "François ", 
+      "lastName": "D'Angelo ",
       "phoneNumber": "+4612345678910",
       "province": localeData.common.provinces.QC,
       "region": "QC",
-      "password": "Password!456",
-      "confirmPassword": "Password!456",
+      "password": "Password!12345677888989080989079",
+      "confirmPassword": "Password!12345677888989080989079",
       "agreement": true
     },
   }
