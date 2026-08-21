@@ -9,7 +9,8 @@
             "passwordMismatch": "Les mots de passe ne correspondent pas",
             "passwordMaximumLength": "Maximum de 32 lettres requises",
             "passwordCriteria": "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre",
-            "longName": "Trop de caractères"
+            "longName": "Trop de caractères",
+            "genericError": "Quelque chose n'a pas fonctionné! Veuillez réessayer et si vous avez toujours des problèmes, n'hésitez pas à contacter votre conseiller"
         },
         "provinces": {
             "ON": "Ontario",

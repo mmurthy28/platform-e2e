@@ -9,7 +9,8 @@
             "passwordMismatch": "Passwords do not match",
             "passwordMaximumLength": "Maximum of 32 letters required",
             "passwordCriteria": "Password must contain at least one uppercase letter, one lowercase letter and one number",
-            "longName": "Too many characters"
+            "longName": "Too many characters",
+            "genericError": "Something went wrong! Please try again and if you continue to have trouble feel free to contact your advisor"
         },
         "provinces": {
             "ON": "Ontario",

@@ -1,6 +1,6 @@
 import { Page, Locator } from '@playwright/test';
 import { Header } from '../components/header';
-import { DEFAULT_APP_LOCALE } from '../utils/locale.utils';
+import { locale, DEFAULT_APP_LOCALE } from '../utils/locale.utils';
 
 export type SignUpFormData = {
     firstName?: string,
@@ -39,6 +39,7 @@ export class SignUpPage {
     readonly loginLink: Locator;
     readonly termsLink: Locator;
     readonly countrySelector: Locator;
+    readonly toast: Locator;
     readonly header: Header;
 
     constructor (page: Page) {
@@ -48,7 +49,6 @@ export class SignUpPage {
         this.emailInput = page.getByTestId('email-input');
         this.phoneInput = page.getByTestId('phoneInput');
         this.regionSelection = page.getByTestId('region-select');
-        this.emailInput = page.getByTestId('email-input');
         this.passwordInput = page.getByTestId('password-input');
         this.passwordConfirmationInput = page.getByTestId('passwordConfirmation-input');
         this.provinceDropdown = page.getByTestId('region-select');
@@ -67,24 +67,17 @@ export class SignUpPage {
         this.pageTitle = page.getByRole('heading', { level: 2 });
         this.agreementLabel = page.locator('label[for="leadDistributeConsentAgreement"]');
         this.countrySelector = page.locator('select[name="phoneCountry"]');
+        this.toast = page.locator('div[role="alert"]');
         this.header = new Header(page);
     }
 
     async goto() {
-        await this.page.goto(`${process.env.BASE_URL}/signup`, { waitUntil: 'networkidle' });
-        const testLocale = (process.env.LOCALE)? process.env.LOCALE : 'en';
+        await this.page.goto(`${process.env.BASE_URL}/signup`, { waitUntil: 'load' });
+        await this.pageTitle.waitFor();
         // Switch locale if required via UI 
-        if (testLocale !== DEFAULT_APP_LOCALE) {
-            await this.header.setLocale(testLocale);
+        if (locale !== DEFAULT_APP_LOCALE) {
+            await this.header.setLocale(locale);
         } 
-    }
-
-    async checkAgreementCheckbox() {
-        await this.agreementCheckbox.check();
-    }
-
-    async uncheckAgreementCheckbox() {
-        await this.agreementCheckbox.uncheck();
     }
 
     async clickCreateAccount() {
@@ -94,7 +87,7 @@ export class SignUpPage {
     async submitAccountForm() {
         const [response] = await Promise.all([
             this.page.waitForResponse(response => 
-              response.url().includes('/api/accounts')
+              response.url().includes('/api/accounts') && response.request().method() === 'POST'
             ),
             this.signUpButton.click()
         ]);
@@ -128,14 +121,10 @@ export class SignUpPage {
         if (data.region) {
             await this.provinceDropdown.selectOption(data.region);
         }
-        if (data.agreement) {
-            const state = data.agreement;
-            if (state) {
-                await this.agreementCheckbox.check();
-            } else {
-                await this.agreementCheckbox.uncheck();
-            }
-            
+        if (data.agreement !== undefined) {
+            data.agreement
+                ? await this.agreementCheckbox.check()
+                : await this.agreementCheckbox.uncheck();
         }
     }
 
@@ -197,5 +186,11 @@ export class SignUpPage {
     async getAllCountries(): Promise<string[]> {
         const optionLabels: string[] = await this.countrySelector.locator('option').allTextContents();
         return optionLabels;
+    }
+
+    async getToastMessage() {
+        await this.toast.waitFor();
+        const message = (await this.toast.allInnerTexts()).join('');
+        return message;
     }
 }

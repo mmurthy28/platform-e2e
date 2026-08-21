@@ -33,48 +33,50 @@ test.describe('Signup page tests', () => {
     });
   }
 
-  test('Sign up page default values', { tag: ['@signup-default'] },async ({ context, page, signupPage }) => {
+  test('Sign up page default values', { tag: ['@signup-default'] },async ({ signupPage }) => {
     await signupPage.goto();
 
-    // Check form elements are visible
-    await expect.soft(signupPage.firstNameInput).toBeVisible();
-    await expect.soft(signupPage.lastNameInput).toBeVisible();
-    await expect.soft(signupPage.phoneInput).toBeVisible();
-    await expect.soft(signupPage.emailInput).toBeVisible();
-    await expect.soft(signupPage.passwordInput).toBeVisible();
-    await expect.soft(signupPage.passwordConfirmationInput).toBeVisible();
-    await expect.soft(signupPage.provinceDropdown).toBeVisible();
-    await expect.soft(signupPage.image).toBeVisible();
-    await expect.soft(signupPage.loginLink).toBeVisible();
-    await expect.soft(signupPage.termsLink).toBeVisible();
-    await expect.soft(signupPage.countrySelector).toBeVisible();
+    await test.step('form fields are visible', async () => {
+      await expect.soft(signupPage.firstNameInput).toBeVisible();
+      await expect.soft(signupPage.lastNameInput).toBeVisible();
+      await expect.soft(signupPage.phoneInput).toBeVisible();
+      await expect.soft(signupPage.emailInput).toBeVisible();
+      await expect.soft(signupPage.passwordInput).toBeVisible();
+      await expect.soft(signupPage.passwordConfirmationInput).toBeVisible();
+      await expect.soft(signupPage.provinceDropdown).toBeVisible();
+      await expect.soft(signupPage.image).toBeVisible();
+      await expect.soft(signupPage.loginLink).toBeVisible();
+      await expect.soft(signupPage.termsLink).toBeVisible();
+      await expect.soft(signupPage.countrySelector).toBeVisible();
+    });
 
-    // Check labels/placeholder in form inputs
-    const displayedPlaceholders = await signupPage.getFieldPlaceholders();
-    expect.soft(displayedPlaceholders['firstName']).toEqual(placeholders['firstName']);
-    expect.soft(displayedPlaceholders['lastName']).toEqual(placeholders['lastName']);
-    expect.soft(displayedPlaceholders['phoneNumber']).toEqual(placeholders['phoneNumber']);
-    expect.soft(displayedPlaceholders['email']).toEqual(placeholders['email']);
-    expect.soft(displayedPlaceholders['password']).toEqual(placeholders['password']);
-    expect.soft(displayedPlaceholders['confirmPassword']).toEqual(placeholders['confirmPassword']);
-    expect.soft(displayedPlaceholders['province']).toEqual(placeholders['province']);
+    await test.step('placeholders are displayed based on locale', async () => {
+      const displayedPlaceholders = await signupPage.getFieldPlaceholders();
+      expect.soft(displayedPlaceholders['firstName']).toEqual(placeholders['firstName']);
+      expect.soft(displayedPlaceholders['lastName']).toEqual(placeholders['lastName']);
+      expect.soft(displayedPlaceholders['phoneNumber']).toEqual(placeholders['phoneNumber']);
+      expect.soft(displayedPlaceholders['email']).toEqual(placeholders['email']);
+      expect.soft(displayedPlaceholders['password']).toEqual(placeholders['password']);
+      expect.soft(displayedPlaceholders['confirmPassword']).toEqual(placeholders['confirmPassword']);
+      expect.soft(displayedPlaceholders['province']).toEqual(placeholders['province']);
+    });
 
-    // Check header, password field and agreement checkbox labels
-    const passwordText = await signupPage.getPasswordCondition();
-    const title = await signupPage.getPageTitle();
-    const agreementText = await signupPage.getAgreementLabel();
-    expect.soft(passwordText).toEqual(localeData.signup.passwordCriteria);
-    expect.soft(title).toEqual(localeData.signup.pageTitle);
-    expect.soft(agreementText).toEqual(localeData.signup.agreementText);
+    await test.step('Check header, password field and agreement checkbox labels', async () => {
+      const passwordText = await signupPage.getPasswordCondition();
+      const title = await signupPage.getPageTitle();
+      const agreementText = await signupPage.getAgreementLabel();
+      expect.soft(passwordText).toEqual(localeData.signup.passwordCriteria);
+      expect.soft(title).toEqual(localeData.signup.pageTitle);
+      expect.soft(agreementText).toEqual(localeData.signup.agreementText);
+    });
 
-    // Check provinces dropdown lists all Canadian provinces
-    const allProvinces = await signupPage.getAllProvinces();
-    const actualProvinces = allProvinces.filter(p => p !== localeData.signup.placeholders.province);
-    const expectedProvinces = Object.values(localeData.common.provinces);
-    expect.soft(actualProvinces.sort()).toEqual(expectedProvinces.sort());
-
-    // Check countries dropdown lists expected count of countries
-    const countries = await signupPage.getAllCountries();
-    expect.soft(countries.length).toEqual(countriesTotal);
+    await test.step('province/countries dropdown are populated correctly', async () => {
+      const allProvinces = await signupPage.getAllProvinces();
+      const actualProvinces = allProvinces.filter(p => p !== localeData.signup.placeholders.province);
+      const expectedProvinces = Object.values(localeData.common.provinces);
+      expect.soft(actualProvinces.sort()).toEqual(expectedProvinces.sort());
+      const countries = await signupPage.getAllCountries();
+      expect.soft(countries.length).toEqual(countriesTotal);
+    });
   });
 });
