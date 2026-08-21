@@ -11,4 +11,5 @@ export const test = base.extend<Fixtures>({
       await use(signupPage);
     }
 });
+
 export { expect } from '@playwright/test';

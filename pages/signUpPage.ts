@@ -72,26 +72,15 @@ export class SignUpPage {
     }
 
     async goto() {
-        await this.page.goto(`${process.env.BASE_URL}/signup`, { waitUntil: 'load' });
+        await this.page.goto('/signup', { waitUntil: 'domcontentloaded' });
         await this.pageTitle.waitFor();
-        // Switch locale if required via UI 
-        if (locale !== DEFAULT_APP_LOCALE) {
+        if (locale !== DEFAULT_APP_LOCALE) { // Switch locale via UI 
             await this.header.setLocale(locale);
         } 
     }
 
     async clickCreateAccount() {
         await this.signUpButton.click();
-    }
-
-    async submitAccountForm() {
-        const [response] = await Promise.all([
-            this.page.waitForResponse(response => 
-              response.url().includes('/api/accounts') && response.request().method() === 'POST'
-            ),
-            this.signUpButton.click()
-        ]);
-        return response;
     }
 
     async fillFormField(locator: Locator, value: string = '') {
@@ -126,6 +115,16 @@ export class SignUpPage {
                 ? await this.agreementCheckbox.check()
                 : await this.agreementCheckbox.uncheck();
         }
+    }
+
+    async submitAccountForm() {
+        const [response] = await Promise.all([
+            this.page.waitForResponse(response => 
+              response.url().includes('/api/accounts') && response.request().method() === 'POST'
+            ),
+            this.signUpButton.click()
+        ]);
+        return response;
     }
 
     getFieldError(field: string) {
@@ -172,7 +171,8 @@ export class SignUpPage {
             province: this.provinceLabel
         };
         for (const [field, locator] of Object.entries(data)) {
-            let value = (field != 'province')? await locator.getAttribute('placeholder') : await locator.innerText();
+            let value = (field != 'province')? 
+                await locator.getAttribute('placeholder') : await locator.innerText();
             placeholders[field] = value ?? '';
         }
         return placeholders;

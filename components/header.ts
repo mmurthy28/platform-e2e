@@ -12,7 +12,8 @@ export class Header {
         const switcherText = await this.localeSwitcher.textContent();
         if (switcherText?.toLowerCase() === targetLocale) {
             await Promise.all([
-                this.page.waitForResponse(res => res.url().includes(`/${targetLocale}/`) && res.status() === 200),
+                this.page.waitForResponse(res => res.url().includes(`/${targetLocale}/`) 
+                    && res.status() === 200),
                 this.localeSwitcher.click()
             ]);
         }

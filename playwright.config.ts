@@ -7,15 +7,14 @@ import { defineConfig, devices } from '@playwright/test';
 import dotenv from 'dotenv';
 const env = process.env.NODE_ENV || 'development';
 switch (env) {
-  case 'development':
-    dotenv.config({ path: '.env.development', quiet: true });
-    break;
   case 'staging':
     dotenv.config({ path: '.env.staging', quiet: true });
     break;
   default:
-    throw new Error(`Unknown environment: ${env}`);
+    dotenv.config({ path: '.env.development', quiet: true });
+    break;
 }
+const baseURL = process.env.BASE_URL;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -35,12 +34,10 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on',
-    screenshot: 'on',
-    video:'on'
   },
 
   /* Configure projects for major browsers */
