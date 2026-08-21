@@ -23,7 +23,6 @@ export class SignUpPage {
     readonly phoneInput: Locator;
     readonly provinceDropdown: Locator;
     readonly provinceLabel: Locator;
-    readonly regionSelection: Locator;
     readonly passwordInput: Locator;
     readonly passwordConfirmationInput: Locator;
     readonly agreementCheckbox: Locator;
@@ -48,7 +47,6 @@ export class SignUpPage {
         this.lastNameInput = page.getByTestId('last-name-input');
         this.emailInput = page.getByTestId('email-input');
         this.phoneInput = page.getByTestId('phoneInput');
-        this.regionSelection = page.getByTestId('region-select');
         this.passwordInput = page.getByTestId('password-input');
         this.passwordConfirmationInput = page.getByTestId('passwordConfirmation-input');
         this.provinceDropdown = page.getByTestId('region-select');
@@ -83,8 +81,7 @@ export class SignUpPage {
         await this.signUpButton.click();
     }
 
-    async fillFormField(locator: Locator, value: string = '') {
-        await locator.clear();
+    async fillFormField(locator: Locator, value: string) {
         await locator.fill(value);
     }
 
@@ -140,19 +137,19 @@ export class SignUpPage {
         return locator;
     }
 
-    async getPageTitle() {
+    async getPageTitle(): Promise<string> {
         await this.pageTitle.waitFor();
         const title = await this.pageTitle.innerText();
         return title;
     }
 
-    async getAgreementLabel() {
+    async getAgreementLabel(): Promise<string> {
         await this.agreementLabel.waitFor();
         const text = await this.agreementLabel.innerText();
         return text;
     }
 
-    async getPasswordCondition() {
+    async getPasswordCondition(): Promise<string> {
         const passwordInfo = this.page.locator('div[role]')
             .filter({ has: this.passwordInput })
             .locator('span[data-testid="typography"]');
@@ -171,7 +168,7 @@ export class SignUpPage {
             province: this.provinceLabel
         };
         for (const [field, locator] of Object.entries(data)) {
-            let value = (field != 'province')? 
+            let value = (field !== 'province')? 
                 await locator.getAttribute('placeholder') : await locator.innerText();
             placeholders[field] = value ?? '';
         }
@@ -188,7 +185,7 @@ export class SignUpPage {
         return optionLabels;
     }
 
-    async getToastMessage() {
+    async getToastMessage(): Promise<string> {
         await this.toast.waitFor();
         const message = (await this.toast.allInnerTexts()).join('');
         return message;
