@@ -46,6 +46,8 @@ NODE_ENV=development LOCALE=fr npx playwright test
 Run the following workflow after selecting locale (en/fr) in the dropdown
 https://github.com/mmurthy28/platform-e2e/actions/workflows/playwright.yml 
 
+#### The test report will be available for 30 days under Artifacts section
+
 ### Test Reports
 
 After local test execution, generate/open the Playwright HTML report:
@@ -54,7 +56,7 @@ npx playwright show-report
 ```
 ### Framework features
 
-* **Page Object Model (POM)** – Encapsulates page locators and actions to improve maintainability and reduce duplication.
+* **Page Object Model (POM)** – Encapsulates page locators and actions to improve maintainability and reduce code duplication.
 * **Reusable Test Fixtures** – Provides shared and reusable test dependencies through Playwright fixtures.
 * **Test Data Management** – Separates test data from test logic using structured data files and dynamically generated data where required.
 * **Environment Configuration** – Supports environment-specific configuration (.env files)
@@ -66,3 +68,4 @@ npx playwright show-report
 * **Detailed Test Reporting** – Generates Playwright HTML reports with test results, errors, traces, and execution details.
 * **CI/CD Integration** – Designed to run reliably in CI pipelines such as GitHub Actions.
 * **Independent and Isolated Tests** – Tests are designed to minimize dependencies between test cases and support reliable parallel execution.
+* **Multi-Locale Testing** – Supports testing the application across multiple locales (en/fr) through configurable locale settings and locale-specific test data.
