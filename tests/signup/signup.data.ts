@@ -19,7 +19,7 @@ export const positiveTests = [
     values: {
       "firstName": "Lory ", 
       "lastName": "O'Brian ",
-      "phoneNumber": "+12312434342",
+      "phoneNumber": "+4612345678910",
       "province": localeData.common.provinces.QC,
       "region": "QC",
       "password": "Password!456",
@@ -134,3 +134,5 @@ export const negativeTests = [
         }
     },
 ]
+
+export const countriesTotal = 246;

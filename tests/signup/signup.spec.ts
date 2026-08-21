@@ -1,5 +1,5 @@
 import { test, expect } from '../../fixtures/baseTest';
-import { positiveTests as testcases } from './signup.data';
+import { positiveTests as testcases, countriesTotal } from './signup.data';
 import { generateUniqueEmail } from '../../utils/test-data.utils';
 import { localeData } from '../../utils/locale.utils';
 const placeholders = localeData.signup.placeholders;
@@ -34,7 +34,7 @@ test.describe('Signup page tests', () => {
     });
   }
 
-  test('Sign up page default values', { tag: ['@signup-default'] },async ({ page, signupPage }) => {
+  test('Sign up page default values', { tag: ['@signup-default'] },async ({ context, page, signupPage }) => {
     await signupPage.goto();
 
     // Check form elements are visible
@@ -48,6 +48,7 @@ test.describe('Signup page tests', () => {
     await expect.soft(signupPage.image).toBeVisible();
     await expect.soft(signupPage.loginLink).toBeVisible();
     await expect.soft(signupPage.termsLink).toBeVisible();
+    await expect.soft(signupPage.countrySelector).toBeVisible();
 
     // Check labels/placeholder in form inputs
     const displayedPlaceholders = await signupPage.getFieldPlaceholders();
@@ -72,5 +73,9 @@ test.describe('Signup page tests', () => {
     const actualProvinces = allProvinces.filter(p => p !== localeData.signup.placeholders.province);
     const expectedProvinces = Object.values(localeData.common.provinces);
     expect.soft(actualProvinces.sort()).toEqual(expectedProvinces.sort());
+
+    // Check countries dropdown lists expected count of countries
+    const countries = await signupPage.getAllCountries();
+    expect.soft(countries.length).toEqual(countriesTotal);
   });
 });

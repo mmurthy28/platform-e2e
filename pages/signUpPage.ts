@@ -38,6 +38,7 @@ export class SignUpPage {
     readonly image: Locator;
     readonly loginLink: Locator;
     readonly termsLink: Locator;
+    readonly countrySelector: Locator;
     readonly header: Header;
 
     constructor (page: Page) {
@@ -65,6 +66,7 @@ export class SignUpPage {
         this.confirmPasswordError = page.getByTestId('passwordConfirmation-error-message-typography');
         this.pageTitle = page.getByRole('heading', { level: 2 });
         this.agreementLabel = page.locator('label[for="leadDistributeConsentAgreement"]');
+        this.countrySelector = page.locator('select[name="phoneCountry"]');
         this.header = new Header(page);
     }
 
@@ -189,6 +191,11 @@ export class SignUpPage {
 
     async getAllProvinces(): Promise<string[]> {
         const optionLabels: string[] = await this.provinceDropdown.locator('option').allTextContents();
+        return optionLabels;
+    }
+
+    async getAllCountries(): Promise<string[]> {
+        const optionLabels: string[] = await this.countrySelector.locator('option').allTextContents();
         return optionLabels;
     }
 }
