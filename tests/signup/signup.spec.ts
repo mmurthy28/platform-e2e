@@ -36,7 +36,7 @@ test.describe('Signup page tests', () => {
   test('Sign up page default values', { tag: ['@signup-default'] },async ({ signupPage }) => {
     await signupPage.goto();
 
-    await test.step('form fields are visible', async () => {
+    await test.step('form fields and links are visible', async () => {
       await expect.soft(signupPage.firstNameInput).toBeVisible();
       await expect.soft(signupPage.lastNameInput).toBeVisible();
       await expect.soft(signupPage.phoneInput).toBeVisible();
