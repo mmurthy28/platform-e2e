@@ -52,3 +52,17 @@ After local test execution, generate/open the Playwright HTML report:
 ```
 npx playwright show-report
 ```
+### Framework features
+
+* **Page Object Model (POM)** – Encapsulates page locators and actions to improve maintainability and reduce duplication.
+* **Reusable Test Fixtures** – Provides shared and reusable test dependencies through Playwright fixtures.
+* **Test Data Management** – Separates test data from test logic using structured data files and dynamically generated data where required.
+* **Environment Configuration** – Supports environment-specific configuration (.env files)
+* **Robust Locators** – Uses accessible and stable locators such as test IDs rather than brittle CSS/XPath selectors.
+* **Built-in Auto-Waiting** – Leverages Playwright's automatic waiting and web-first assertions instead of unnecessary hard waits.
+* **Reusable Utilities** – Common operations such as unique email generation is centralized in utilities.
+* **Test Tagging and Filtering** – Supports organizing and selectively executing tests using tags
+* **Trace, Screenshot Support** – Captures debugging artifacts for failed tests to simplify failure investigation.
+* **Detailed Test Reporting** – Generates Playwright HTML reports with test results, errors, traces, and execution details.
+* **CI/CD Integration** – Designed to run reliably in CI pipelines such as GitHub Actions.
+* **Independent and Isolated Tests** – Tests are designed to minimize dependencies between test cases and support reliable parallel execution.
