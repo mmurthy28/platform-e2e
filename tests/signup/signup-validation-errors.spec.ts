@@ -1,4 +1,4 @@
-import { test, expect } from '../../fixtures/baseTest';
+import { test, expect } from '../../fixtures/pages.fixtures';
 import { negativeTests as testcases } from './signup.data';
 import { positiveTests as accountTests } from './signup.data'
 import { generateUniqueEmail } from '../../utils/test-data.utils';

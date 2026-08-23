@@ -54,6 +54,37 @@ After local test execution, generate/open the Playwright HTML report:
 ```
 npx playwright show-report
 ```
+
+### Project Structure
+ 
+```
+platform-e2e/
+├── .github/
+│   └── workflows/
+│       └── playwright.yml        # CI pipeline configuration
+├── components/
+│   └── header.ts                 # Shared components across pages
+├── data/                         # Static/reference test data
+├── fixtures/
+│   └── pages.fixtures.ts         # Custom Playwright fixtures wiring up page objects
+├── pages/
+│   ├── basePage.ts               # Abstract base class shared by all page objects
+│   └── signUpPage.ts             # Sign-up page object
+├── tests/
+│   └── signup/
+│       ├── signup-validation-e2e.spec.ts  # Sign-up validation test cases
+│       ├── signup-data.ts        # Test data for sign-up specs
+│       └── signup.spec.ts        # Core sign-up flow tests
+├── utils/                        # Shared helpers
+├── .env.development              # Environment variables — development
+├── .env.staging                  # Environment variables — staging
+├── .gitignore
+├── package.json
+├── package-lock.json
+├── playwright.config.ts          # Playwright test runner configuration
+└── README.md
+```
+
 ### Framework features
 
 * **Page Object Model (POM)** – Encapsulates page locators and actions to improve maintainability and reduce code duplication.

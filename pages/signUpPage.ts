@@ -1,6 +1,5 @@
 import { Page, Locator } from '@playwright/test';
-import { Header } from '../components/header';
-import { locale, DEFAULT_APP_LOCALE } from '../utils/locale.utils';
+import { BasePage } from './basePage';
 
 export type SignUpFormData = {
     firstName?: string,
@@ -14,8 +13,7 @@ export type SignUpFormData = {
     agreement?: boolean
 }
 
-export class SignUpPage {
-    readonly page: Page;
+export class SignUpPage extends BasePage {
     readonly firstNameInput: Locator;
     readonly lastNameInput: Locator;
     readonly emailInput: Locator;
@@ -39,10 +37,9 @@ export class SignUpPage {
     readonly termsLink: Locator;
     readonly countrySelector: Locator;
     readonly toast: Locator;
-    readonly header: Header;
 
     constructor (page: Page) {
-        this.page = page;
+        super(page);
         this.firstNameInput = page.getByTestId('first-name-input');
         this.lastNameInput = page.getByTestId('last-name-input');
         this.emailInput = page.getByTestId('email-input');
@@ -66,15 +63,11 @@ export class SignUpPage {
         this.agreementLabel = page.locator('label[for="leadDistributeConsentAgreement"]');
         this.countrySelector = page.locator('select[name="phoneCountry"]');
         this.toast = page.locator('div[role="alert"]');
-        this.header = new Header(page);
     }
 
     async goto() {
-        await this.page.goto('/signup', { waitUntil: 'domcontentloaded' });
+        await super.goto('/signup');
         await this.pageTitle.waitFor();
-        if (locale !== DEFAULT_APP_LOCALE) { // Switch locale via UI 
-            await this.header.setLocale(locale);
-        } 
     }
 
     async clickCreateAccount() {
