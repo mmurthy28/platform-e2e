@@ -40,13 +40,31 @@ export const negativeTests = {
         'email': localeData.common.errorMessages.invalidEmail
       },
     },
+    {
+      title: 'form submission with only whitespace values',
+      values: {
+        firstName: " ",
+        lastName: " ",
+        email: " ",
+        phoneNumber: " ",
+        password: " ",
+        confirmPassword: " "
+      },
+      expectedErrors: {
+        'password': localeData.common.errorMessages.passwordMinimumLength,
+        'firstName': localeData.common.errorMessages.requiredField,
+        'lastName': localeData.common.errorMessages.requiredField,
+        'phoneNumber': localeData.common.errorMessages.invalidValue,
+        'email': localeData.common.errorMessages.invalidEmail
+      },
+    },
   ],
   "name": [
     {
       title: 'name contains numbers',
       values: {
-        firstName: "123User",
-        lastName: "123Test"
+        firstName: "U12ser",
+        lastName: "T56est"
       },
       expectedErrors: {
         'firstName': localeData.common.errorMessages.invalidName,
@@ -68,7 +86,7 @@ export const negativeTests = {
       title: 'first name is too long',
       values: {
         firstName: "adsfsdvfsbfdbfgsnhmjhgfdwsdfghjhgfdsadfghjgfdvcsadsfsdffffggghij",
-        lastName: " "
+        lastName: ""
       },
       expectedErrors: {
         'firstName': localeData.common.errorMessages.longName,
@@ -78,14 +96,14 @@ export const negativeTests = {
     {
       title: 'last name is too long',
       values: {
-        lastName: "adsfsdvfsbfdbfgsnhmjhgfdwsdfghjhgfdsadfghjgfdvcsadsfsdffffggghij",
-        firstName: " "
+        firstName: "",
+        lastName: "adsfsdvfsbfdbfgsnhmjhgfdwsdfghjhgfdsadfghjgfdvcsadsfsdffffggghij"
       },
       expectedErrors: {
         'firstName': localeData.common.errorMessages.requiredField,
         'lastName': localeData.common.errorMessages.longName,
       },
-    }
+    },
   ],
   "phoneNumber": [
     {
@@ -113,7 +131,7 @@ export const negativeTests = {
       values: {
         firstName: "John",
         lastName: "McGuire",
-        email: "john @xyz.in",
+        email: "jo hn@xyz.in",
       },
       expectedErrors: {
         'email': localeData.common.errorMessages.invalidEmail,

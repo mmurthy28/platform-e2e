@@ -67,12 +67,6 @@ export class SignUpPage extends BasePage {
 
     async goto() {
         await super.goto('/signup');
-        await Promise.all([
-            this.page.waitForResponse(response => response.url().includes('/signup') && 
-                response.status() === 200 && 
-                response.request().method() === 'GET'),
-            this.page.waitForLoadState('domcontentloaded')
-        ]);
         await this.pageTitle.waitFor();
     }
 
@@ -86,25 +80,25 @@ export class SignUpPage extends BasePage {
     }
 
     async fillForm(data: SignUpFormData) {
-        if (data.firstName) {
-            await this.fillFormField(this.firstNameInput, data.firstName);
-        }
-        if (data.lastName) {
+        if (data.lastName !== undefined) {
             await this.fillFormField(this.lastNameInput, data.lastName);
         }
-        if (data.phoneNumber) {
+        if (data.firstName !== undefined) {
+            await this.fillFormField(this.firstNameInput, data.firstName);
+        }
+        if (data.phoneNumber !== undefined) {
             await this.fillFormField(this.phoneInput, data.phoneNumber);
         }
-        if (data.password) {
+        if (data.password !== undefined) {
             await this.fillFormField(this.passwordInput, data.password);
         }
-        if (data.confirmPassword) {
+        if (data.confirmPassword !== undefined) {
             await this.fillFormField(this.passwordConfirmationInput, data.confirmPassword);
         }
-        if (data.email) {
+        if (data.email !== undefined) {
             await this.fillFormField(this.emailInput, data.email);
         }
-        if (data.region) {
+        if (data.region !== undefined) {
             await this.provinceDropdown.selectOption(data.region);
         }
         if (data.agreement !== undefined) {
