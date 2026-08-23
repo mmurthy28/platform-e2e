@@ -4,7 +4,7 @@ import { generateUniqueEmail } from '../../utils/test-data.utils';
 import { localeData } from '../../utils/locale.utils';
 const placeholders = localeData.signup.placeholders;
 
-test.describe('Signup page tests', () => {
+test.describe.parallel('Signup page tests', () => {
   const successCases = [
     { name: 'with agreement opted out', data: testcases[0] },
     { name: 'with agreement opted in', data: testcases[1] }
@@ -15,7 +15,7 @@ test.describe('Signup page tests', () => {
   });
 
   for (const { name, data } of successCases) {
-    test(`User can sign up successfully ${name}`, { tag: ['@signup-success'] }, async ({ page, signupPage }) => {
+    test(`user can sign up successfully ${name}`, { tag: ['@signup-success'] }, async ({ page, signupPage }) => {
       const validUser = { ...data.values, email: generateUniqueEmail() };
       await signupPage.fillForm(validUser);
       const response = await signupPage.submitAccountForm();
@@ -36,7 +36,7 @@ test.describe('Signup page tests', () => {
     });
   }
 
-  test('Sign up page default values', { tag: ['@signup-default'] },async ({ signupPage }) => {
+  test('sign up page - default values', { tag: ['@signup-default'] },async ({ signupPage }) => {
 
     await test.step('form fields and links are visible', async () => {
       await expect.soft(signupPage.firstNameInput).toBeVisible();

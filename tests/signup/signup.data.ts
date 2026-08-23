@@ -3,7 +3,7 @@ import { localeData } from '../../utils/locale.utils';
 export const positiveTests = [
   {
     values: {
-      "firstName": "Test", 
+      "firstName": "Test",
       "lastName": "User",
       "phoneNumber": "+12345678910",
       "province": localeData.common.provinces.ON,
@@ -15,7 +15,7 @@ export const positiveTests = [
   },
   {
     values: {
-      "firstName": "François ", 
+      "firstName": "François ",
       "lastName": "D'Angelo ",
       "phoneNumber": "+4612345678910",
       "province": localeData.common.provinces.QC,
@@ -27,9 +27,10 @@ export const positiveTests = [
   }
 ]
 
-export const negativeTests = [
+export const negativeTests = {
+  "common": [
     {
-      title: 'form submitted is empty',
+      title: 'empty form submission',
       values: {},
       expectedErrors: {
         'password': localeData.common.errorMessages.passwordMinimumLength,
@@ -39,6 +40,8 @@ export const negativeTests = [
         'email': localeData.common.errorMessages.invalidEmail
       },
     },
+  ],
+  "name": [
     {
       title: 'name is invalid',
       values: {
@@ -71,9 +74,11 @@ export const negativeTests = [
         'firstName': localeData.common.errorMessages.requiredField,
         'lastName': localeData.common.errorMessages.longName,
       },
-    },
+    }
+  ],
+  "email": [
     {
-      title: 'email is invalid',
+      title: 'email contains space',
       values: {
         firstName: "John",
         lastName: "McGuire",
@@ -83,6 +88,41 @@ export const negativeTests = [
         'email': localeData.common.errorMessages.invalidEmail,
       },
     },
+    {
+      title: 'email does not contain @ symbol',
+      values: {
+        firstName: "John",
+        lastName: "Doe",
+        email: "john.doe.com",
+      },
+      expectedErrors: {
+        'email': localeData.common.errorMessages.invalidEmail,
+      },
+    },
+    {
+      title: 'email does not contain domain',
+      values: {
+        firstName: "John",
+        lastName: "Doe",
+        email: "john.doe@",
+      },
+      expectedErrors: {
+        'email': localeData.common.errorMessages.invalidEmail,
+      },
+    },
+    {
+      title: 'email contains invalid characters',
+      values: {
+        firstName: "John",
+        lastName: "Doe",
+        email: "john!doe$@domain.com",
+      },
+      expectedErrors: {
+        'email': localeData.common.errorMessages.invalidEmail,
+      },
+    }
+  ],
+  "password": [
     {
       title: 'password contains less than 12 characters',
       values: {
@@ -94,43 +134,44 @@ export const negativeTests = [
       }
     },
     {
-        title: 'password contains more than 32 characters',
-        values: {
-          "password": "Password!123456789101234567891012"
-        },
-        expectedErrors: {
-          'password': localeData.common.errorMessages.passwordMaximumLength,
-        }
+      title: 'password contains more than 32 characters',
+      values: {
+        "password": "Password!123456789101234567891012"
+      },
+      expectedErrors: {
+        'password': localeData.common.errorMessages.passwordMaximumLength,
+      }
     },
     {
-        title: 'password does not contain uppercase letter',
-        values: {
-          "password": "abcdefghijk1",
-          "confirmPassword": "abcdefghijk1",
-        },
-        expectedErrors: {
-          'password': localeData.common.errorMessages.passwordCriteria,
-        }
+      title: 'password does not contain uppercase letter',
+      values: {
+        "password": "abcdefghijk1",
+        "confirmPassword": "abcdefghijk1",
+      },
+      expectedErrors: {
+        'password': localeData.common.errorMessages.passwordCriteria,
+      }
     },
     {
-        title: 'password field does not contain lowercase letter',
-        values: {
-          "password": "123456789ABC",
-          "confirmPassword": "123456789ABC",
-        },
-        expectedErrors: {
-          'password': localeData.common.errorMessages.passwordCriteria,
-        }
+      title: 'password field does not contain lowercase letter',
+      values: {
+        "password": "123456789ABC",
+        "confirmPassword": "123456789ABC",
+      },
+      expectedErrors: {
+        'password': localeData.common.errorMessages.passwordCriteria,
+      }
     },
     {
-        title: 'password does not contain a number',
-        values: {
-          "password": "Abcdefghijkl",
-        },
-        expectedErrors: {
-          'password': localeData.common.errorMessages.passwordCriteria,
-        }
+      title: 'password does not contain a number',
+      values: {
+        "password": "Abcdefghijkl",
+      },
+      expectedErrors: {
+        'password': localeData.common.errorMessages.passwordCriteria,
+      }
     },
-]
+  ]
+}
 
 export const countriesTotal = 246;

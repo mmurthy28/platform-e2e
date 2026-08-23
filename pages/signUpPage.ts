@@ -67,6 +67,12 @@ export class SignUpPage extends BasePage {
 
     async goto() {
         await super.goto('/signup');
+        await Promise.all([
+            this.page.waitForResponse(response => response.url().includes('/signup') && 
+                response.status() === 200 && 
+                response.request().method() === 'GET'),
+            this.page.waitForLoadState('domcontentloaded')
+        ]);
         await this.pageTitle.waitFor();
     }
 
@@ -75,6 +81,7 @@ export class SignUpPage extends BasePage {
     }
 
     async fillFormField(locator: Locator, value: string) {
+        await locator.clear();
         await locator.fill(value);
     }
 
