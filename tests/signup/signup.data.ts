@@ -43,10 +43,21 @@ export const negativeTests = {
   ],
   "name": [
     {
-      title: 'name is invalid',
+      title: 'name contains numbers',
       values: {
-        firstName: "123",
-        lastName: "123"
+        firstName: "123User",
+        lastName: "123Test"
+      },
+      expectedErrors: {
+        'firstName': localeData.common.errorMessages.invalidName,
+        'lastName': localeData.common.errorMessages.invalidName,
+      },
+    },
+    {
+      title: 'name contains invalid characters',
+      values: {
+        firstName: "User!",
+        lastName: "Test@"
       },
       expectedErrors: {
         'firstName': localeData.common.errorMessages.invalidName,
@@ -105,6 +116,17 @@ export const negativeTests = {
         firstName: "John",
         lastName: "Doe",
         email: "john.doe@",
+      },
+      expectedErrors: {
+        'email': localeData.common.errorMessages.invalidEmail,
+      },
+    },
+    {
+      title: 'email does not contain id',
+      values: {
+        firstName: "John",
+        lastName: "Doe",
+        email: "@gmail.com",
       },
       expectedErrors: {
         'email': localeData.common.errorMessages.invalidEmail,
