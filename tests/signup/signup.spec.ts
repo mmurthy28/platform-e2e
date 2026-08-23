@@ -10,10 +10,13 @@ test.describe('Signup page tests', () => {
     { name: 'with agreement opted in', data: testcases[1] }
   ];
 
+  test.beforeEach(async({ signupPage }) => {
+    await signupPage.goto();
+  });
+
   for (const { name, data } of successCases) {
     test(`User can sign up successfully ${name}`, { tag: ['@signup-success'] }, async ({ page, signupPage }) => {
       const validUser = { ...data.values, email: generateUniqueEmail() };
-      await signupPage.goto();
       await signupPage.fillForm(validUser);
       const response = await signupPage.submitAccountForm();
 
@@ -34,7 +37,6 @@ test.describe('Signup page tests', () => {
   }
 
   test('Sign up page default values', { tag: ['@signup-default'] },async ({ signupPage }) => {
-    await signupPage.goto();
 
     await test.step('form fields and links are visible', async () => {
       await expect.soft(signupPage.firstNameInput).toBeVisible();
@@ -48,6 +50,14 @@ test.describe('Signup page tests', () => {
       await expect.soft(signupPage.loginLink).toBeVisible();
       await expect.soft(signupPage.termsLink).toBeVisible();
       await expect.soft(signupPage.countrySelector).toBeVisible();
+
+    });
+    
+    await test.step('password fields show expected type and criteria', async () => {
+      await expect.soft(signupPage.passwordInput).toHaveAttribute('type', 'password');
+      await expect.soft(signupPage.passwordConfirmationInput).toHaveAttribute('type', 'password');
+      const passwordText = await signupPage.getPasswordCondition();
+      expect.soft(passwordText).toEqual(localeData.signup.passwordCriteria);
     });
 
     await test.step('placeholders are displayed based on locale', async () => {
@@ -61,11 +71,9 @@ test.describe('Signup page tests', () => {
       expect.soft(displayedPlaceholders['province']).toEqual(placeholders['province']);
     });
 
-    await test.step('Check header, password field and agreement checkbox labels', async () => {
-      const passwordText = await signupPage.getPasswordCondition();
+    await test.step('header and agreement checkbox show correct labels', async () => {
       const title = await signupPage.getPageTitle();
       const agreementText = await signupPage.getAgreementLabel();
-      expect.soft(passwordText).toEqual(localeData.signup.passwordCriteria);
       expect.soft(title).toEqual(localeData.signup.pageTitle);
       expect.soft(agreementText).toEqual(localeData.signup.agreementText);
     });
