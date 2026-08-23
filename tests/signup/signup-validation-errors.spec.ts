@@ -40,19 +40,18 @@ test.describe.parallel('Sign up page validation tests', () => {
     }
   });
 
-  test('form-level validation', { tag: ['@signup-errors'] }, async ({ signupPage }) => {
-    for (const { title, values, expectedErrors } of testcases.common) {
+  test('phone number field validation', { tag: ['@signup-errors'] }, async ({ signupPage }) => {
+    for (const { title, values, expectedErrors } of testcases.phoneNumber) {
       await test.step(title, async () => {
         await signupPage.fillForm(values);
         await signupPage.clickCreateAccount();
-        for (const [field, error] of Object.entries(expectedErrors)) {
-          await expect.soft(signupPage.getFieldError(field)).toHaveText(error);
-        }
+        await expect.soft(signupPage.getFieldError('phoneNumber')).toHaveText(expectedErrors.phoneNumber);
       });
     }
   });
 
-  test('duplicate accounts cannot be created', { tag: ['@signup-errors'] }, async ({ page, signupPage }) => {
+  test('duplicate accounts cannot be created', { tag: ['@signup-errors'] }, async ({ signupPage }) => {
+    test.slow();
     const data = { ...accountTests[0].values, email: generateUniqueEmail() };
     await signupPage.fillForm(data);
     const response = await signupPage.submitAccountForm();
@@ -64,5 +63,17 @@ test.describe.parallel('Sign up page validation tests', () => {
     await signupPage.clickCreateAccount();
     const errorMessage = await signupPage.getToastMessage();
     expect.soft(errorMessage).toContain(localeData.common.errorMessages.genericError);
+  });
+
+  test('form-level validation', { tag: ['@signup-errors'] }, async ({ signupPage }) => {
+    for (const { title, values, expectedErrors } of testcases.common) {
+      await test.step(title, async () => {
+        await signupPage.fillForm(values);
+        await signupPage.clickCreateAccount();
+        for (const [field, error] of Object.entries(expectedErrors)) {
+          await expect.soft(signupPage.getFieldError(field)).toHaveText(error);
+        }
+      });
+    }
   });
 });

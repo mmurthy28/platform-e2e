@@ -3,8 +3,8 @@ import { localeData } from '../../utils/locale.utils';
 export const positiveTests = [
   {
     values: {
-      "firstName": "Test",
       "lastName": "User",
+      "firstName": "Test",
       "phoneNumber": "+12345678910",
       "province": localeData.common.provinces.ON,
       "region": "ON",
@@ -15,8 +15,8 @@ export const positiveTests = [
   },
   {
     values: {
-      "firstName": "François ",
       "lastName": "D'Angelo ",
+      "firstName": "François ",
       "phoneNumber": "+4612345678910",
       "province": localeData.common.provinces.QC,
       "region": "QC",
@@ -87,6 +87,26 @@ export const negativeTests = {
       },
     }
   ],
+  "phoneNumber": [
+    {
+      title: 'phone number contains less than ten digits',
+      values: {
+        phoneNumber: "+1234567890",
+      },
+      expectedErrors: {
+        'phoneNumber': localeData.common.errorMessages.invalidValue,
+      },
+    },
+    {
+      title: 'phone number contains more than allowed digits',
+      values: {
+        phoneNumber: "+42345678902222222228",
+      },
+      expectedErrors: {
+        'phoneNumber': localeData.common.errorMessages.invalidValue,
+      },
+    },
+  ],
   "email": [
     {
       title: 'email contains space',
@@ -122,17 +142,6 @@ export const negativeTests = {
       },
     },
     {
-      title: 'email does not contain id',
-      values: {
-        firstName: "John",
-        lastName: "Doe",
-        email: "@gmail.com",
-      },
-      expectedErrors: {
-        'email': localeData.common.errorMessages.invalidEmail,
-      },
-    },
-    {
       title: 'email contains invalid characters',
       values: {
         firstName: "John",
@@ -142,7 +151,18 @@ export const negativeTests = {
       expectedErrors: {
         'email': localeData.common.errorMessages.invalidEmail,
       },
-    }
+    },
+    {
+      title: 'email contains no id',
+      values: {
+        firstName: "John",
+        lastName: "Doe",
+        email: "@gmail.com",
+      },
+      expectedErrors: {
+        'email': localeData.common.errorMessages.invalidEmail,
+      },
+    },
   ],
   "password": [
     {
