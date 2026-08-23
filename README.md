@@ -34,6 +34,7 @@ LOCALE=fr npx playwright test
 ### To run a specific test:
 ```
 npx playwright test tests/signup/signup.spec.ts
+npx playwright test tests/signup/signup-validation-errors.spec.ts
 ```
 
 ### To run all tests in a specific environment (development/staging), default is development:
